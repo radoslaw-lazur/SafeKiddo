@@ -4,6 +4,8 @@ import com.example.safekiddo.api.KlazifyClient;
 import com.example.safekiddo.domain.SocialMedia;
 import com.example.safekiddo.domain.Website;
 import com.example.safekiddo.domain.WebsiteCategory;
+import com.example.safekiddo.domain.dto.api.DomainApiDto;
+import com.example.safekiddo.domain.dto.api.WebsiteApiDto;
 import com.example.safekiddo.exception.ObjectNotFoundException;
 import com.example.safekiddo.mapper.WebsiteMapper;
 import com.example.safekiddo.repository.WebSiteRepository;
@@ -12,12 +14,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -45,6 +49,7 @@ public class WebsiteServiceTest {
     private Website website;
     private SocialMedia socialMedia;
     private WebsiteCategory websiteCategory;
+    private WebsiteApiDto websiteApiDto;
 
     @Before
     public void init() {
@@ -54,6 +59,24 @@ public class WebsiteServiceTest {
         websiteCategory = new WebsiteCategory(TEST_CONFIDENCE, TEST_STRING);
         websiteCategory.setId(1L);
         website = new Website(1L, TEST_URL, TEST_LOGO_URL, socialMedia, Collections.singletonList(websiteCategory));
+        websiteApiDto = new WebsiteApiDto(new DomainApiDto(), Boolean.TRUE);
+    }
+
+    @Test
+    public void shouldAddWebsiteWithKlazifyApi() {
+        //Given
+        when(webSiteRepository.existsByUrl(anyString())).thenReturn(Boolean.FALSE);
+        when(klazifyClient.getWebsiteData(anyString())).thenReturn(ResponseEntity.of(Optional.of(websiteApiDto)));
+        when(webSiteRepository.save(any())).thenReturn(website);
+        //When
+        Optional<Website> websiteFromDb = Optional.ofNullable(underTest.addWebsite(TEST_URL));
+        //Then
+        verify(webSiteRepository).existsByUrl(anyString());
+        assertTrue(websiteFromDb.isPresent());
+        assertEquals(TEST_URL, websiteFromDb.get().getUrl());
+        assertEquals(TEST_CONFIDENCE, websiteFromDb.get().getWebsiteCategories().get(0).getConfidence(), 0);
+        assertEquals(TEST_URL, websiteFromDb.get().getSocialMedia().getFacebookUrl());
+        assertEquals(TEST_LOGO_URL, websiteFromDb.get().getLogoUrl());
     }
 
     @Test
