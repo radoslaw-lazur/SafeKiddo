@@ -22,6 +22,7 @@ public class WebsiteCategory {
     @NotNull
     private String name;
     @ManyToOne
+    @JoinColumn(name = "website_id")
     @JsonIgnore
     private Website website;
 

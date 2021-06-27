@@ -28,6 +28,7 @@ public class SocialMedia {
     private String linkedinUrl;
     private String githubUrl;
     @OneToOne
+    @JoinColumn(name = "website_id")
     @JsonIgnore
     private Website website;
 
