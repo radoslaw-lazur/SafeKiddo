@@ -19,7 +19,7 @@ This is a Java app which uses Maven build. The project has been made based on Sp
 The project is covered with tests using Junit, Mockito, and SpringBootTest.
 
 <p align="center">
-  <img width="" height="" src="https://zapodaj.net/images/8da3a4a79fb66.png">
+  <img width="" height="" src="https://zapodaj.net/images/ef26f544d15d5.png">
 </p>
 
 This project was created using InteliJ Idea IDE.
