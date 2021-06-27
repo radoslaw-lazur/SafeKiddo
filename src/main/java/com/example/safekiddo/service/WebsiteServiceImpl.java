@@ -31,7 +31,6 @@ public class WebsiteServiceImpl implements WebsiteService {
     }
 
     @Override
-    @Transactional
     public Website addWebsite(String url) {
         if (!webSiteRepository.existsByUrl(url)) {
             return webSiteRepository.save(getWebsiteToDb(url));
@@ -48,7 +47,6 @@ public class WebsiteServiceImpl implements WebsiteService {
     }
 
     @Override
-    @Transactional
     public Website updateWebsite(String url, WebsiteDto websiteDto) {
         return webSiteRepository.getWebsiteByUrl(url)
                 .map(websiteFromDb -> {
@@ -78,7 +76,6 @@ public class WebsiteServiceImpl implements WebsiteService {
     }
 
     @Override
-    @Transactional
     public void deleteWebsite(String url) {
         webSiteRepository.deleteByUrl(url);
         log.info("Website deleted: " + url);
