@@ -21,9 +21,7 @@ public class Website {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotNull
-    @URL
     private String url;
-    @URL
     private String logoUrl;
     @OneToOne (
             targetEntity = SocialMedia.class,
