@@ -63,6 +63,8 @@ Heroku Environment:
 
 Heroku:
 
+https://pacific-sands-80351.herokuapp.com/
+
 Please note the heroku free dymo sleeps after 30min inactivity. Wait for the response when woken up.
 
 If you have any questions please do not hesitate to ask: radoslaw.lazur@gmail.com
