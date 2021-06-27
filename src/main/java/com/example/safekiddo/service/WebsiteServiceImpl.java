@@ -9,7 +9,6 @@ import com.example.safekiddo.mapper.WebsiteMapper;
 import com.example.safekiddo.repository.WebSiteRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Objects;
