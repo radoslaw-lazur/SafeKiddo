@@ -22,7 +22,7 @@ public class WebsiteServiceImpl implements WebsiteService {
     private final WebsiteMapper websiteMapper;
     private final WebSiteRepository webSiteRepository;
 
-    private final String WEBSITE_NOT_FOUND = "The website not found";
+    private final String WEBSITE_NOT_FOUND = "The website not found: ";
 
     public WebsiteServiceImpl(KlazifyClient klazifyClient, WebsiteMapper websiteMapper, WebSiteRepository webSiteRepository) {
         this.klazifyClient = klazifyClient;
@@ -36,7 +36,7 @@ public class WebsiteServiceImpl implements WebsiteService {
         if (!webSiteRepository.existsByUrl(url)) {
             return webSiteRepository.save(getWebsiteToDb(url));
         }
-        return webSiteRepository.getWebsiteByUrl(url).orElseThrow(() -> new ObjectNotFoundException(WEBSITE_NOT_FOUND));
+        return webSiteRepository.getWebsiteByUrl(url).orElseThrow(() -> new ObjectNotFoundException(WEBSITE_NOT_FOUND + url));
     }
 
     private Website getWebsiteToDb(String url) {
@@ -44,7 +44,7 @@ public class WebsiteServiceImpl implements WebsiteService {
         if (websiteApiDto.isSuccess()) {
             return websiteMapper.mapToWebsite(websiteApiDto);
         }
-        throw new ObjectNotFoundException(WEBSITE_NOT_FOUND);
+        throw new ObjectNotFoundException(WEBSITE_NOT_FOUND + url);
     }
 
     @Override
@@ -54,7 +54,7 @@ public class WebsiteServiceImpl implements WebsiteService {
                 .map(websiteFromDb -> {
                     patchWebsite(websiteDto, websiteFromDb);
                     return webSiteRepository.save(websiteFromDb);
-                }).orElseThrow(() -> new ObjectNotFoundException(WEBSITE_NOT_FOUND));
+                }).orElseThrow(() -> new ObjectNotFoundException(WEBSITE_NOT_FOUND + url));
     }
 
     private void patchWebsite(WebsiteDto websiteDto, Website websiteFromDb) {
@@ -74,7 +74,7 @@ public class WebsiteServiceImpl implements WebsiteService {
 
     @Override
     public Website getWebsite(String url) {
-        return webSiteRepository.getWebsiteByUrl(url).orElseThrow(() -> new ObjectNotFoundException(WEBSITE_NOT_FOUND));
+        return webSiteRepository.getWebsiteByUrl(url).orElseThrow(() -> new ObjectNotFoundException(WEBSITE_NOT_FOUND + url));
     }
 
     @Override
