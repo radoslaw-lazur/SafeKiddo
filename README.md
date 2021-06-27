@@ -32,11 +32,27 @@ To start-up the application the repository needs to be cloned. When cloned, buil
 When the project is built, run the app.
 The app starts on localhost:8080 - Tomcat
 
+#### Check the Swagger UI endpoint!
+
+[Swagger Documentation](http://localhost:8080/swagger-ui/index.html#/)
+
+<p align="center">
+  <img width="" height="" src="https://zapodaj.net/images/ec71212725090.png">
+</p>
+
+
 Sample Request POST: localhost:8080/v1/websites?url=https://www.gry-online.pl/
 
 Sample Response:
 <p align="center">
   <img width="" height="" src="https://zapodaj.net/images/1301e52337928.png">
+</p>
+
+Sample Request POST: localhost:8080/v1/websites?url=http://onet.pl
+
+Sample Response:
+<p align="center">
+  <img width="" height="" src="https://zapodaj.net/images/da9443aafd8b9.png">
 </p>
 
 Heroku Environment:
